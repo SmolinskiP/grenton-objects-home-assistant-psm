@@ -81,7 +81,7 @@ async def test_async_turn_on_dali(monkeypatch):
     await obj.async_turn_on()
 
     assert captured_command["value"] == {
-        "command": "CLU220000000:execute(0, 'DAL0000:execute(2, 254, 0)')"
+        "command": "CLU220000000:execute(0, 'DAL0000:execute(1, 254, 0)')"
     }
     assert obj.is_on
     assert obj._state == STATE_ON
@@ -97,7 +97,7 @@ async def test_async_turn_on_dali_custom_brightness(monkeypatch):
     await obj.async_turn_on(brightness=128)
 
     assert captured_command["value"] == {
-        "command": "CLU220000000:execute(0, 'DAL0000:execute(2, 127, 0)')"
+        "command": "CLU220000000:execute(0, 'DAL0000:execute(1, 127, 0)')"
     }
     assert obj.is_on
     assert obj._state == STATE_ON
@@ -270,7 +270,7 @@ async def test_async_turn_off_dali(monkeypatch):
     await obj.async_turn_off()
 
     assert captured_command["value"] == {
-        "command": "CLU220000000:execute(0, 'DAL0000:execute(2, 0, 0)')"
+        "command": "CLU220000000:execute(0, 'DAL0000:execute(1, 0, 0)')"
     }
     assert not obj.is_on
     assert obj._state == STATE_OFF
