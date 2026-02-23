@@ -265,7 +265,9 @@ class GrentonLight(LightEntity):
             
             if self._grenton_type == CONF_GRENTON_TYPE_DALI:
                 dali_brightness = self._ha_to_dali_brightness(brightness)
-                command = self._generate_command("command", grenton_id_part_0, grenton_id_part_1, "execute", 2, dali_brightness)
+                command = {
+                    "command": f"{grenton_id_part_0}:execute(0, '{grenton_id_part_1}:execute(2, {dali_brightness}, 0)')"
+                }
                 self._brightness = self._dali_to_ha_brightness(dali_brightness)
                 self._last_brightness = self._brightness
             elif self._grenton_type in command_brightness_mapping:
@@ -358,7 +360,12 @@ class GrentonLight(LightEntity):
                 else:
                     config = command_mapping.get(CONF_GRENTON_TYPE_RGB, {"action": "set", "index": 0})
             
-            command = self._generate_command("command", grenton_id_part_0, grenton_id_part_1, config["action"], config["index"], 0)
+            if self._grenton_type == CONF_GRENTON_TYPE_DALI:
+                command = {
+                    "command": f"{grenton_id_part_0}:execute(0, '{grenton_id_part_1}:execute(2, 0, 0)')"
+                }
+            else:
+                command = self._generate_command("command", grenton_id_part_0, grenton_id_part_1, config["action"], config["index"], 0)
             self._last_brightness = self._brightness
             self._state = STATE_OFF
             self._last_command_time = self.hass.loop.time() if self.hass is not None else None
