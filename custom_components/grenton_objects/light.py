@@ -265,7 +265,7 @@ class GrentonLight(LightEntity):
             
             if self._grenton_type == CONF_GRENTON_TYPE_DALI:
                 dali_brightness = self._ha_to_dali_brightness(brightness)
-                command = self._generate_command("command", grenton_id_part_0, grenton_id_part_1, "set", 2, dali_brightness)
+                command = self._generate_command("command", grenton_id_part_0, grenton_id_part_1, "execute", 2, dali_brightness)
                 self._brightness = self._dali_to_ha_brightness(dali_brightness)
                 self._last_brightness = self._brightness
             elif self._grenton_type in command_brightness_mapping:
@@ -340,7 +340,7 @@ class GrentonLight(LightEntity):
                 CONF_GRENTON_TYPE_RGB: {"action": "execute", "index": 0},
                 CONF_GRENTON_TYPE_DIMMER: {"action": "set", "index": 0},
                 CONF_GRENTON_TYPE_DOUT: {"action": "set", "index": 0},
-                CONF_GRENTON_TYPE_DALI: {"action": "set", "index": 2},
+                CONF_GRENTON_TYPE_DALI: {"action": "execute", "index": 2},
                 CONF_GRENTON_TYPE_LED_R: {"action": "execute", "index": 3},
                 CONF_GRENTON_TYPE_LED_G: {"action": "execute", "index": 4},
                 CONF_GRENTON_TYPE_LED_B: {"action": "execute", "index": 5},
